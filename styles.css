@@ -1,45 +1,4 @@
 #canvas {
 	border: 10px solid black;
-	/*margin-left: 50px;*/
-}
-
-.little-box{
-	/*border: 10px solid black;*/
-	float: right;
-}
-
-.header {
-	margin-top: 10px;
-	margin-bottom: 20px;
-	/*background: radial-gradient(#ea9138, white);*/
-	background-color: #ea9138;
-	color: white;
-	border-radius: 20px;
-	height: 90px;
-	line-height: 90px;
-}
-
-.filler {
-	margin-bottom: 25px;
-	margin-top: 5px;
-
-}
-
-#thickness {
-	width: 15%;
-}
-
-.fancy {
-	background: linear-gradient(to top left, white, #54ffcb);	
-	/*background-color: #54ffcb;*/
-	border-radius: 20px;
-	padding-top: 20px;
-	padding-bottom: 20px;
-
-}
-
-#canvas {
 	border-radius: 5px;
-	background-color: white;
 }
-

@@ -40,8 +40,8 @@ var balls = [
 		y: 250,
 		xDirection: 1,
 		yDirection: 1,
-		xSpeed: 5,
-		ySpeed: 3
+		xSpeed: Math.ceil(Math.random() * 10),
+		ySpeed: Math.ceil(Math.random() * 10)
 	}
 ]
 function drawBall(array){
@@ -108,3 +108,31 @@ canvas.addEventListener('click', function(event){
 
 });	
 
+function Timer(id, starttime){
+	this.id = id;
+	this.starttime = starttime;
+	var clock = document.getElementById(id);
+	this.secondsSpan = clock.querySelector('.seconds');
+	
+	this.getTimePast = function(){
+		var t = Date.parse(new Date()) - Date.parse(this.starttime);
+		this.seconds = Math.floor((t / 1000) % 60);
+		// console.log(this.seconds);
+	};
+
+	this.updateTimer = function(){
+		this.getTimePast();
+		this.secondsSpan.innerHTML = this.seconds;
+		// console.log(this.seconds)
+	};
+}
+
+var startTime = new Date();
+console.log(startTime)
+
+var countUp = new Timer('ticking-clock', startTime);
+setInterval(
+	function(){
+		countUp.updateTimer();
+		}, 1000
+);
