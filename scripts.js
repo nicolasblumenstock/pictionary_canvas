@@ -2,11 +2,12 @@
 
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext('2d');
-var gradient =context.createLinearGradient(0,0,250,500);
+var gradient = context.createLinearGradient(0,0,250,500);
+// var gradient = context.createRadialGradient(0,0,250,500,500,250)
 context.strokeStyle = gradient;
 gradient.addColorStop("0","magenta");
 gradient.addColorStop("0.5", "orange");
-gradient.addColorStop("1", "blue");
+gradient.addColorStop("1", "cyan");
 // context.lineWidth = 5;
 // context.moveTo(100,100);
 // context.lineTo(200,200);
@@ -40,6 +41,8 @@ function drawBall(){
 	context.fillStyle = gradient;
 	context.beginPath();
 	context.arc(x,y,r,0,2*Math.PI);
+	context.shadowBlur =20;
+	context.shadowColor = "black";
 	// context.arc(ballx2,bally2,ballr2,0,2*Math.PI);
 	context.clearRect(0,0,500,500);
 	context.fill();	
@@ -52,6 +55,10 @@ function drawBall(){
 	}
 	if ((x >= 500 - r) || (x <= 0 +r)){
 		xDirection = -xDirection;
+	}
+
+	if (r < 5) {
+		r = 1;
 	}
 
 
