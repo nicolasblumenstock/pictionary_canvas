@@ -19,6 +19,33 @@ var r = 50;
 // var xSpeed = 5;
 // var ySpeed = 3;
 var numberOfClicks = 0;
+var timer = 0;
+
+function Timer(id, starttime){
+	this.id = id;
+	this.starttime = starttime;
+	var clock = document.getElementById(id);
+	this.secondsSpan = clock.querySelector('.seconds');
+	this.seconds = 0;
+	
+	this.getTimePast = function(){
+		var t = Date.parse(new Date()) - Date.parse(this.starttime);
+		if ((t % 1000) == 0){
+			this.seconds++;
+		}
+		// this.seconds = Math.floor((t / 1000) % 60);
+		// console.log(this.seconds);
+	};
+
+	this.updateTimer = function(){
+		this.getTimePast();
+		this.secondsSpan.innerHTML = this.seconds;
+		// console.log(this.seconds)
+	};
+}
+
+var startTime = new Date();
+console.log(startTime)
 
 function ballProject(x,y,r){
 	this.x = x;
@@ -31,19 +58,74 @@ function ballProject(x,y,r){
 
 }
 
-
-
-
 var balls = [
-	{
-		x: 400,
-		y: 250,
-		xDirection: 1,
-		yDirection: 1,
-		xSpeed: Math.ceil(Math.random() * 10),
-		ySpeed: Math.ceil(Math.random() * 10)
-	}
+	// {
+	// 	x: 400,
+	// 	y: 250,
+	// 	xDirection: 1,
+	// 	yDirection: 1,
+	// 	xSpeed: Math.ceil(Math.random() * 10),
+	// 	ySpeed: Math.ceil(Math.random() * 10)
+	// }
 ]
+
+function newBall(array,x,y,r){
+	array.push(new ballProject(x,y,r));
+	console.log(array);
+
+};
+
+function StartGame(){
+	if (balls.length < 1)	{
+		balls.push(new ballProject(400,250,r));
+		console.log(balls);
+		startTime = new Date();
+		var countUp = new Timer('ticking-clock', startTime);
+		timer = setInterval(
+			function(){
+				countUp.updateTimer();
+				}, 1000
+	);			
+
+	};
+
+};
+
+function Erase() {
+	if (balls.length != 0){
+		balls.length = 0;	
+}
+	context.clearRect(0,0,750,500);
+	console.log(balls);
+	r = 50;
+	startTime = new Date();
+	numberOfClicks = 0;
+	document.getElementById('number').innerHTML = String(numberOfClicks);
+	clearInterval(timer);
+	document.getElementsByClassName('seconds').innerHTML = String(0);
+	
+};
+
+function collidingBalls(ball,array){
+	for (j = 0; j < array.length; j++){
+		var curXPos = (ball.x + ball.r);
+		var curXNeg = (ball.x - ball.r);
+		var curYPos = (ball.y + ball.r);
+		var curYNeg = (ball.y - ball.r);
+		var newXPos = (array[j].x + array[j].r);
+		var newXNeg = (array[j].x - array[j].r);
+		var newYPos = (array[j].y + array[j].r);
+		var newYNeg = (array[j].y - array[j].r);	
+
+		if ((curXPos <= newXNeg) || (curXNeg >= newXPos) || (curYPos <= newYNeg) || (curYNeg >= newYPos)){
+			ball.xSpeed = -ball.xSpeed * (ball.xDirection);
+			ball.ySpeed = -ball.ySpeed * (ball.yDirection);
+			array[j].xSpeed = -array[j].xSpeed * (array[j].xDirection);
+			array[j].ySpeed = -array[j].ySpeed * (array[j].yDirection);
+		}
+	}
+}
+
 function drawBall(array){
 	context.beginPath();
 	for (i = 0; i < array.length; i++){	
@@ -51,9 +133,9 @@ function drawBall(array){
 		context.arc(array[i].x, array[i].y, r, 0, 2*Math.PI);
 		context.shadowBlur =20;
 		context.shadowColor = "black";
+		context.closePath();
 		// context.arc(ballx2,bally2,ballr2,0,2*Math.PI);
 		context.clearRect(0,0,750,500);
-		context.closePath();
 		context.fill();		
 
 		array[i].x += array[i].xSpeed * array[i].xDirection;
@@ -69,7 +151,8 @@ function drawBall(array){
 		if (r < 5) {
 			r = 1;
 		}
-
+		
+		collidingBalls(array[i], array);
 	}
 
 }
@@ -84,10 +167,7 @@ function drawBall(array){
 // 		ySpeed: Math.ceil(Math.random() * 10)
 // 	});
 // }
-function newBall(array,x,y,r){
-	array.push(new ballProject(x,y,r));
-	console.log(array)
-}
+
 
 var ball = setInterval(drawBall, 30, balls);
 
@@ -108,31 +188,6 @@ canvas.addEventListener('click', function(event){
 
 });	
 
-function Timer(id, starttime){
-	this.id = id;
-	this.starttime = starttime;
-	var clock = document.getElementById(id);
-	this.secondsSpan = clock.querySelector('.seconds');
-	
-	this.getTimePast = function(){
-		var t = Date.parse(new Date()) - Date.parse(this.starttime);
-		this.seconds = Math.floor((t / 1000) % 60);
-		// console.log(this.seconds);
-	};
 
-	this.updateTimer = function(){
-		this.getTimePast();
-		this.secondsSpan.innerHTML = this.seconds;
-		// console.log(this.seconds)
-	};
-}
 
-var startTime = new Date();
-console.log(startTime)
 
-var countUp = new Timer('ticking-clock', startTime);
-setInterval(
-	function(){
-		countUp.updateTimer();
-		}, 1000
-);

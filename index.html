@@ -12,7 +12,7 @@
 	<div class="container">
 		<div class="row upper">
 			<div class="col-md-12">
-				<h1 class="text-muted">Blob Marley</h1>
+				<h1 class="text-muted">blobMarley</h1>
 			</div>
 		</div>
 		<div class="row content">	
@@ -21,12 +21,19 @@
 			</div>
 			<div class="col-md-4 info">
 				<div class="row">
-					<div class="col-xs-4 col-sm-4 col-md-12 col-lg-12">
+					<div class="col-xs-4 col-sm-4 col-md-12 col-lg-12 balls">
 						<h4 class="text-muted">Ball Clicked <span id="number">0</span> Times</h4>
 					</div>
-					<div class="col-xs-offset-4 col-xs-4 col-sm-offset-sm-4 col-sm-4 col-md-offset-0 col-md-12 col-lg-offset-0 col-lg-12 timer">
-						<h4  id="ticking-clock" class="text-muted"><span class="seconds"></span> Seconds Elapsed</h4>
+					<div class="col-xs-offset-4 col-xs-4 col-sm-offset-sm-4 col-sm-4 col-md-offset-0 col-md-12 col-lg-offset-0 col-lg-12 timer balls">
+						<h4  id="ticking-clock" class="text-muted"><span class="seconds">0</span> Seconds Elapsed</h4>
 					</div>
+					<div class="col-md-12 balls">
+						<button class="btn btn-primary" id="clear" onclick="StartGame();">let's go</button>
+					</div>						
+					<div class="col-md-12 balls">
+						<button class="btn btn-warning" id="clear" onclick="Erase();">reset</button>
+					</div>	
+				
 				</div>	
 			</div>
 		</div>

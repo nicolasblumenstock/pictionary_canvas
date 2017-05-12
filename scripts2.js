@@ -9,6 +9,8 @@ var thicknessPicker = document.getElementById('thickness');
 var mouseDown = false;
 var mousePosition = {};
 var lastMousePosition = null;
+// document.getElementById('canvas-img') = dataURL;
+
 
 colorPicker.addEventListener('change', function(event){
 	// console.log(event);
@@ -62,10 +64,18 @@ canvas.addEventListener('mousemove', function(event){
 
 });
 
+// clears screen
 function Erase() {
 	context.clearRect(0,0,750,500);
 };
 
+// opens new window with canvas to be saveable as png
+function Picture(){
+	var img = canvas.toDataURL("image/png");
+	window.open(img);
+}
+
+//timer that counts up to 60 seconds then resets ... should probably work on that
 function Timer(id, starttime){
 	this.id = id;
 	this.starttime = starttime;
@@ -74,8 +84,9 @@ function Timer(id, starttime){
 	
 	this.getTimePast = function(){
 		var t = Date.parse(new Date()) - Date.parse(this.starttime);
-		this.seconds = Math.floor((t / 1000) % 60);
-		// console.log(this.seconds);
+		if ((t % 1000) == 0){
+			this.seconds++;
+		}
 	};
 
 	this.updateTimer = function(){
@@ -86,7 +97,7 @@ function Timer(id, starttime){
 }
 
 var startTime = new Date();
-console.log(startTime)
+// console.log(startTime)
 
 var countUp = new Timer('ticking-clock', startTime);
 setInterval(
