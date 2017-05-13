@@ -81,6 +81,7 @@ function Timer(id, starttime){
 	this.starttime = starttime;
 	var clock = document.getElementById(id);
 	this.secondsSpan = clock.querySelector('.seconds');
+	this.seconds = 0;
 	
 	this.getTimePast = function(){
 		var t = Date.parse(new Date()) - Date.parse(this.starttime);
